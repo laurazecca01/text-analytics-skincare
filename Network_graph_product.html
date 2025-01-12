@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#F4744C", "font": {"color": "white", "size": 20}, "id": "Cleanser", "label": "Cleanser", "physics": false, "shape": "circle", "size": 30, "title": "Cleanser"}, {"color": "#F4744C", "id": "cleans", "label": "cleans", "physics": false, "shape": "box", "size": 10}, {"color": "#F4744C", "id": "remov", "label": "remov", "physics": false, "shape": "box", "size": 10}, {"color": "#F4744C", "id": "makeup", "label": "makeup", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "gentl", "label": "gentl", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "cleanser", "label": "cleanser", "physics": false, "shape": "box", "size": 10}, {"color": "#F4744C", "id": "clean", "label": "clean", "physics": false, "shape": "box", "size": 10}, {"color": "#F4744C", "id": "wipe", "label": "wipe", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "facial", "label": "facial", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "pore", "label": "pore", "physics": false, "shape": "box", "size": 10}, {"color": "#F4744C", "id": "makeup remov", "label": "makeup remov", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "font": {"color": "white", "size": 20}, "id": "Body Wash", "label": "Body Wash", "physics": false, "shape": "circle", "size": 30, "title": "Body Wash"}, {"color": "#5275CD", "font": {"color": "white", "size": 20}, "id": "Exfoliators", "label": "Exfoliators", "physics": false, "shape": "circle", "size": 30, "title": "Exfoliators"}, {"color": "#FAC958", "font": {"color": "white", "size": 20}, "id": "Face masks", "label": "Face masks", "physics": false, "shape": "circle", "size": 30, "title": "Face masks"}, {"color": "#5275CD", "id": "scrub", "label": "scrub", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "exfoli", "label": "exfoli", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "bodi", "label": "bodi", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "bodi scrub", "label": "bodi scrub", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "dead", "label": "dead", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "salt", "label": "salt", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "smooth", "label": "smooth", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "dead skin", "label": "dead skin", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "cell", "label": "cell", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "font": {"color": "white", "size": 20}, "id": "Lotion", "label": "Lotion", "physics": false, "shape": "circle", "size": 30, "title": "Lotion"}, {"color": "#FAC958", "id": "mask", "label": "mask", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "face mask", "label": "face mask", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "clay", "label": "clay", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "blackhead", "label": "blackhead", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "facial mask", "label": "facial mask", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "use", "label": "use", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "peel", "label": "peel", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "tea", "label": "tea", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "lotion", "label": "lotion", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "bodi lotion", "label": "bodi lotion", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "dri", "label": "dri", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "dri skin", "label": "dri skin", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "care", "label": "care", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "gift", "label": "gift", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "lotion dri", "label": "lotion dri", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "daili", "label": "daili", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "bath", "label": "bath", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "font": {"color": "white", "size": 20}, "id": "Organic", "label": "Organic", "physics": false, "shape": "circle", "size": 30, "title": "Organic"}, {"color": "#5AA45C", "id": "natur", "label": "natur", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "ingredi", "label": "ingredi", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "product", "label": "product", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "organ", "label": "organ", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "natur ingredi", "label": "natur ingredi", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "safe", "label": "safe", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "chemic", "label": "chemic", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "bee", "label": "bee", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "contain", "label": "contain", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "extract", "label": "extract", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "wash", "label": "wash", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "bodi wash", "label": "bodi wash", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "dove", "label": "dove", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "shower", "label": "shower", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "nourish", "label": "nourish", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "scent", "label": "scent", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "feel", "label": "feel", "physics": false, "shape": "box", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "Cleanser", "length": 200, "to": "cleans", "width": 1}, {"from": "Cleanser", "length": 200, "to": "remov", "width": 1}, {"from": "Cleanser", "length": 200, "to": "makeup", "width": 1}, {"from": "Cleanser", "length": 200, "to": "gentl", "width": 1}, {"from": "Cleanser", "length": 200, "to": "cleanser", "width": 1}, {"from": "Cleanser", "length": 200, "to": "clean", "width": 1}, {"from": "Cleanser", "length": 200, "to": "wipe", "width": 1}, {"from": "Cleanser", "length": 200, "to": "facial", "width": 1}, {"from": "Cleanser", "length": 200, "to": "pore", "width": 1}, {"from": "Cleanser", "length": 200, "to": "makeup remov", "width": 1}, {"color": "lightgrey", "from": "Cleanser", "length": 500, "to": "Body Wash", "value": 2, "width": 1}, {"color": "lightgrey", "from": "Cleanser", "length": 500, "to": "Exfoliators", "value": 2, "width": 1}, {"color": "lightgrey", "from": "Cleanser", "length": 500, "to": "Face masks", "value": 2, "width": 1}, {"from": "gentl", "length": 200, "to": "Exfoliators", "width": 1}, {"from": "gentl", "length": 200, "to": "Body Wash", "width": 1}, {"from": "cleanser", "length": 200, "to": "Body Wash", "width": 1}, {"from": "facial", "length": 200, "to": "Face masks", "width": 1}, {"from": "pore", "length": 200, "to": "Face masks", "width": 1}, {"from": "Exfoliators", "length": 200, "to": "scrub", "width": 1}, {"from": "Exfoliators", "length": 200, "to": "exfoli", "width": 1}, {"from": "Exfoliators", "length": 200, "to": "bodi", "width": 1}, {"from": "Exfoliators", "length": 200, "to": "bodi scrub", "width": 1}, {"from": "Exfoliators", "length": 200, "to": "dead", "width": 1}, {"from": "Exfoliators", "length": 200, "to": "salt", "width": 1}, {"from": "Exfoliators", "length": 200, "to": "smooth", "width": 1}, {"from": "Exfoliators", "length": 200, "to": "dead skin", "width": 1}, {"from": "Exfoliators", "length": 200, "to": "cell", "width": 1}, {"from": "bodi", "length": 200, "to": "Lotion", "width": 1}, {"from": "bodi", "length": 200, "to": "Body Wash", "width": 1}, {"from": "Face masks", "length": 200, "to": "mask", "width": 1}, {"from": "Face masks", "length": 200, "to": "face mask", "width": 1}, {"from": "Face masks", "length": 200, "to": "clay", "width": 1}, {"from": "Face masks", "length": 200, "to": "blackhead", "width": 1}, {"from": "Face masks", "length": 200, "to": "facial mask", "width": 1}, {"from": "Face masks", "length": 200, "to": "use", "width": 1}, {"from": "Face masks", "length": 200, "to": "peel", "width": 1}, {"from": "Face masks", "length": 200, "to": "tea", "width": 1}, {"from": "Lotion", "length": 200, "to": "lotion", "width": 1}, {"from": "Lotion", "length": 200, "to": "bodi lotion", "width": 1}, {"from": "Lotion", "length": 200, "to": "dri", "width": 1}, {"from": "Lotion", "length": 200, "to": "dri skin", "width": 1}, {"from": "Lotion", "length": 200, "to": "care", "width": 1}, {"from": "Lotion", "length": 200, "to": "gift", "width": 1}, {"from": "Lotion", "length": 200, "to": "lotion dri", "width": 1}, {"from": "Lotion", "length": 200, "to": "daili", "width": 1}, {"from": "Lotion", "length": 200, "to": "bath", "width": 1}, {"color": "lightgrey", "from": "Lotion", "length": 500, "to": "Body Wash", "value": 2, "width": 1}, {"color": "lightgrey", "from": "Lotion", "length": 500, "to": "Organic", "value": 2, "width": 1}, {"from": "Organic", "length": 200, "to": "natur", "width": 1}, {"from": "Organic", "length": 200, "to": "ingredi", "width": 1}, {"from": "Organic", "length": 200, "to": "product", "width": 1}, {"from": "Organic", "length": 200, "to": "organ", "width": 1}, {"from": "Organic", "length": 200, "to": "natur ingredi", "width": 1}, {"from": "Organic", "length": 200, "to": "safe", "width": 1}, {"from": "Organic", "length": 200, "to": "chemic", "width": 1}, {"from": "Organic", "length": 200, "to": "bee", "width": 1}, {"from": "Organic", "length": 200, "to": "contain", "width": 1}, {"from": "Organic", "length": 200, "to": "extract", "width": 1}, {"from": "Body Wash", "length": 200, "to": "wash", "width": 1}, {"from": "Body Wash", "length": 200, "to": "bodi wash", "width": 1}, {"from": "Body Wash", "length": 200, "to": "dove", "width": 1}, {"from": "Body Wash", "length": 200, "to": "shower", "width": 1}, {"from": "Body Wash", "length": 200, "to": "nourish", "width": 1}, {"from": "Body Wash", "length": 200, "to": "scent", "width": 1}, {"from": "Body Wash", "length": 200, "to": "feel", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"font": {"size": 16}}, "edges": {"color": {"inherit": true}, "smooth": false}, "physics": {"enabled": false}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

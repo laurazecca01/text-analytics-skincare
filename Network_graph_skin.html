@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#F4744C", "font": {"color": "white", "size": 20}, "id": "Sensitive Skin", "label": "Sensitive Skin", "physics": false, "shape": "circle", "size": 30, "title": "Sensitive Skin"}, {"color": "#F4744C", "id": "skin", "label": "skin", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "help", "label": "help", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "dri", "label": "dri", "physics": false, "shape": "box", "size": 10}, {"color": "#F4744C", "id": "care", "label": "care", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "hydrat", "label": "hydrat", "physics": false, "shape": "box", "size": 10}, {"color": "#F4744C", "id": "sensit", "label": "sensit", "physics": false, "shape": "box", "size": 10}, {"color": "#F4744C", "id": "healthi", "label": "healthi", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "look", "label": "look", "physics": false, "shape": "box", "size": 10}, {"color": "#F4744C", "id": "smooth", "label": "smooth", "physics": false, "shape": "box", "size": 10}, {"color": "#F4744C", "id": "skin care", "label": "skin care", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "font": {"color": "white", "size": 20}, "id": "Dry Skin", "label": "Dry Skin", "physics": false, "shape": "circle", "size": 30, "title": "Dry Skin"}, {"color": "#FAC958", "font": {"color": "white", "size": 20}, "id": "Under eyes", "label": "Under eyes", "physics": false, "shape": "circle", "size": 30, "title": "Under eyes"}, {"color": "#FF6347", "font": {"color": "white", "size": 20}, "id": "Acne prone skin", "label": "Acne prone skin", "physics": false, "shape": "circle", "size": 30, "title": "Acne prone skin"}, {"color": "#F1A4A3", "font": {"color": "white", "size": 20}, "id": "Aging", "label": "Aging", "physics": false, "shape": "circle", "size": 30, "title": "Aging"}, {"color": "#5275CD", "font": {"color": "white", "size": 20}, "id": "Sun Protection", "label": "Sun Protection", "physics": false, "shape": "circle", "size": 30, "title": "Sun Protection"}, {"color": "#5275CD", "id": "sunscreen", "label": "sunscreen", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "protect", "label": "protect", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "spf", "label": "spf", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "sun", "label": "sun", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "spectrum", "label": "spectrum", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "water", "label": "water", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "resist", "label": "resist", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "uva", "label": "uva", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "uvb", "label": "uvb", "physics": false, "shape": "box", "size": 10}, {"color": "#5275CD", "id": "miner", "label": "miner", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "eye", "label": "eye", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "puffi", "label": "puffi", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "circl", "label": "circl", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "dark", "label": "dark", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "dark circl", "label": "dark circl", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "eye mask", "label": "eye mask", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "eye cream", "label": "eye cream", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "patch", "label": "patch", "physics": false, "shape": "box", "size": 10}, {"color": "#FAC958", "id": "gel", "label": "gel", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "cream", "label": "cream", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "wrinkl", "label": "wrinkl", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "age", "label": "age", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "anti", "label": "anti", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "anti age", "label": "anti age", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "line", "label": "line", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "retinol", "label": "retinol", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "fine", "label": "fine", "physics": false, "shape": "box", "size": 10}, {"color": "#F1A4A3", "id": "fine line", "label": "fine line", "physics": false, "shape": "box", "size": 10}, {"color": "#E35982", "font": {"color": "white", "size": 20}, "id": "Dull Skin", "label": "Dull Skin", "physics": false, "shape": "circle", "size": 30, "title": "Dull Skin"}, {"color": "#5AA45C", "id": "moistur", "label": "moistur", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "daili", "label": "daili", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "dri skin", "label": "dri skin", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "non", "label": "non", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "formula", "label": "formula", "physics": false, "shape": "box", "size": 10}, {"color": "#5AA45C", "id": "soft", "label": "soft", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "acn", "label": "acn", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "treatment", "label": "treatment", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "clear", "label": "clear", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "pore", "label": "pore", "physics": false, "shape": "box", "size": 10}, {"color": "#E35982", "id": "acid", "label": "acid", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "eakout", "label": "eakout", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "pimpl", "label": "pimpl", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "spot", "label": "spot", "physics": false, "shape": "box", "size": 10}, {"color": "#FF6347", "id": "acn treatment", "label": "acn treatment", "physics": false, "shape": "box", "size": 10}, {"color": "#E35982", "id": "serum", "label": "serum", "physics": false, "shape": "box", "size": 10}, {"color": "#E35982", "id": "vitamin", "label": "vitamin", "physics": false, "shape": "box", "size": 10}, {"color": "#E35982", "id": "c", "label": "c", "physics": false, "shape": "box", "size": 10}, {"color": "#E35982", "id": "vitamin c", "label": "vitamin c", "physics": false, "shape": "box", "size": 10}, {"color": "#E35982", "id": "hyaluron", "label": "hyaluron", "physics": false, "shape": "box", "size": 10}, {"color": "#E35982", "id": "hyaluron acid", "label": "hyaluron acid", "physics": false, "shape": "box", "size": 10}, {"color": "#E35982", "id": "e", "label": "e", "physics": false, "shape": "box", "size": 10}, {"color": "#E35982", "id": "c serum", "label": "c serum", "physics": false, "shape": "box", "size": 10}, {"color": "#E35982", "id": "vitamin c serum", "label": "vitamin c serum", "physics": false, "shape": "box", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "Sensitive Skin", "length": 200, "to": "skin", "width": 1}, {"from": "Sensitive Skin", "length": 200, "to": "help", "width": 1}, {"from": "Sensitive Skin", "length": 200, "to": "dri", "width": 1}, {"from": "Sensitive Skin", "length": 200, "to": "care", "width": 1}, {"from": "Sensitive Skin", "length": 200, "to": "hydrat", "width": 1}, {"from": "Sensitive Skin", "length": 200, "to": "sensit", "width": 1}, {"from": "Sensitive Skin", "length": 200, "to": "healthi", "width": 1}, {"from": "Sensitive Skin", "length": 200, "to": "look", "width": 1}, {"from": "Sensitive Skin", "length": 200, "to": "smooth", "width": 1}, {"from": "Sensitive Skin", "length": 200, "to": "skin care", "width": 1}, {"color": "lightgrey", "from": "Sensitive Skin", "length": 500, "to": "Dry Skin", "value": 2, "width": 1}, {"color": "lightgrey", "from": "Sensitive Skin", "length": 500, "to": "Under eyes", "value": 2, "width": 1}, {"from": "help", "length": 200, "to": "Dry Skin", "width": 1}, {"from": "help", "length": 200, "to": "Acne prone skin", "width": 1}, {"from": "dri", "length": 200, "to": "Dry Skin", "width": 1}, {"from": "hydrat", "length": 200, "to": "Dry Skin", "width": 1}, {"from": "look", "length": 200, "to": "Aging", "width": 1}, {"from": "Sun Protection", "length": 200, "to": "sunscreen", "width": 1}, {"from": "Sun Protection", "length": 200, "to": "protect", "width": 1}, {"from": "Sun Protection", "length": 200, "to": "spf", "width": 1}, {"from": "Sun Protection", "length": 200, "to": "sun", "width": 1}, {"from": "Sun Protection", "length": 200, "to": "spectrum", "width": 1}, {"from": "Sun Protection", "length": 200, "to": "water", "width": 1}, {"from": "Sun Protection", "length": 200, "to": "resist", "width": 1}, {"from": "Sun Protection", "length": 200, "to": "uva", "width": 1}, {"from": "Sun Protection", "length": 200, "to": "uvb", "width": 1}, {"from": "Sun Protection", "length": 200, "to": "miner", "width": 1}, {"color": "lightgrey", "from": "Sun Protection", "length": 500, "to": "Dry Skin", "value": 2, "width": 1}, {"from": "Under eyes", "length": 200, "to": "eye", "width": 1}, {"from": "Under eyes", "length": 200, "to": "puffi", "width": 1}, {"from": "Under eyes", "length": 200, "to": "circl", "width": 1}, {"from": "Under eyes", "length": 200, "to": "dark", "width": 1}, {"from": "Under eyes", "length": 200, "to": "dark circl", "width": 1}, {"from": "Under eyes", "length": 200, "to": "eye mask", "width": 1}, {"from": "Under eyes", "length": 200, "to": "eye cream", "width": 1}, {"from": "Under eyes", "length": 200, "to": "patch", "width": 1}, {"from": "Under eyes", "length": 200, "to": "gel", "width": 1}, {"from": "Under eyes", "length": 200, "to": "cream", "width": 1}, {"color": "lightgrey", "from": "Under eyes", "length": 500, "to": "Acne prone skin", "value": 2, "width": 1}, {"from": "cream", "length": 200, "to": "Aging", "width": 1}, {"from": "cream", "length": 200, "to": "Dry Skin", "width": 1}, {"from": "Aging", "length": 200, "to": "wrinkl", "width": 1}, {"from": "Aging", "length": 200, "to": "age", "width": 1}, {"from": "Aging", "length": 200, "to": "anti", "width": 1}, {"from": "Aging", "length": 200, "to": "anti age", "width": 1}, {"from": "Aging", "length": 200, "to": "line", "width": 1}, {"from": "Aging", "length": 200, "to": "retinol", "width": 1}, {"from": "Aging", "length": 200, "to": "fine", "width": 1}, {"from": "Aging", "length": 200, "to": "fine line", "width": 1}, {"color": "lightgrey", "from": "Aging", "length": 500, "to": "Dull Skin", "value": 2, "width": 1}, {"from": "Dry Skin", "length": 200, "to": "moistur", "width": 1}, {"from": "Dry Skin", "length": 200, "to": "daili", "width": 1}, {"from": "Dry Skin", "length": 200, "to": "dri skin", "width": 1}, {"from": "Dry Skin", "length": 200, "to": "non", "width": 1}, {"from": "Dry Skin", "length": 200, "to": "formula", "width": 1}, {"from": "Dry Skin", "length": 200, "to": "soft", "width": 1}, {"from": "Acne prone skin", "length": 200, "to": "acn", "width": 1}, {"from": "Acne prone skin", "length": 200, "to": "treatment", "width": 1}, {"from": "Acne prone skin", "length": 200, "to": "clear", "width": 1}, {"from": "Acne prone skin", "length": 200, "to": "pore", "width": 1}, {"from": "Acne prone skin", "length": 200, "to": "acid", "width": 1}, {"from": "Acne prone skin", "length": 200, "to": "eakout", "width": 1}, {"from": "Acne prone skin", "length": 200, "to": "pimpl", "width": 1}, {"from": "Acne prone skin", "length": 200, "to": "spot", "width": 1}, {"from": "Acne prone skin", "length": 200, "to": "acn treatment", "width": 1}, {"from": "acid", "length": 200, "to": "Dull Skin", "width": 1}, {"from": "Dull Skin", "length": 200, "to": "serum", "width": 1}, {"from": "Dull Skin", "length": 200, "to": "vitamin", "width": 1}, {"from": "Dull Skin", "length": 200, "to": "c", "width": 1}, {"from": "Dull Skin", "length": 200, "to": "vitamin c", "width": 1}, {"from": "Dull Skin", "length": 200, "to": "hyaluron", "width": 1}, {"from": "Dull Skin", "length": 200, "to": "hyaluron acid", "width": 1}, {"from": "Dull Skin", "length": 200, "to": "e", "width": 1}, {"from": "Dull Skin", "length": 200, "to": "c serum", "width": 1}, {"from": "Dull Skin", "length": 200, "to": "vitamin c serum", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"font": {"size": 16}}, "edges": {"color": {"inherit": true}, "smooth": false}, "physics": {"enabled": false}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
