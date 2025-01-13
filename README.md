@@ -21,6 +21,8 @@ With this project we work on what was learnt in class, and try to apply text ana
    - Each node represents either a topic or highly relevant terms
    - Connections show shared terminology between topics
 
+![Topic Modeling Results](https://raw.githubusercontent.com/laurazecca01/text-analytics-skincare/af70a299724a566bfdeb324d4020b5d14ff15d57/images/rundown%20of%20the%20topic%20modelling%20results-1.png)
+
 ## Methodology
 
 ### Data Preparation
