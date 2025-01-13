@@ -10,18 +10,19 @@ With this project we work on what was learnt in class, and try to apply text ana
    - X-axis: coefficient values indicating predictive power
    - Y-axis: word frequency in reviews
    - Notable finding: Stronger indicators for negative reviews than positive ones
-
+<img src="https://github.com/laurazecca01/text-analytics-skincare/blob/main/images/rundown%20of%20the%20topic%20modelling%20results-1.png?raw=true" alt="Scatterplot" width="600"/>
 2. **Word Clouds**
    - Reviews cloud: More verb-focused (love, make, try, put, smell, buy)
    - Description cloud: More noun-focused (formula, fragrance, moisturizer, oil, face)
    - Common terms in both: "product" and "skin"
-
+<img src="https://github.com/laurazecca01/text-analytics-skincare/blob/main/images/rundown%20of%20the%20topic%20modelling%20results-1.png?raw=true" alt="WordClouds" width="600"/>
 3. **Topic Modeling Networks**
    - Visualizes relationships between skincare concerns and product types
    - Each node represents either a topic or highly relevant terms
    - Connections show shared terminology between topics
 
-![Topic Modeling Results](https://raw.githubusercontent.com/laurazecca01/text-analytics-skincare/af70a299724a566bfdeb324d4020b5d14ff15d57/images/rundown%20of%20the%20topic%20modelling%20results-1.png)
+<img src="https://github.com/laurazecca01/text-analytics-skincare/blob/main/images/rundown%20of%20the%20topic%20modelling%20results-1.png?raw=true" alt="Topic Modeling Results" width="600"/>
+
 
 ## Methodology
 
